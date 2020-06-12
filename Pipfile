@@ -10,6 +10,7 @@ autopep8 = "*"
 flask = "~=1.1.2"
 python-dotenv = "*"
 python-bitcoinrpc = "*"
+simplejson = "*"
 
 [requires]
 python_version = "3.6"
