@@ -21,7 +21,7 @@
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                $(destElem).html(response["info"]);
+                $(destElem).html(response.walletversion);
             },
             error: function (error) {
                 console.log(error);
