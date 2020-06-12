@@ -6,8 +6,27 @@
 
 {% block content %}
 <div>
-    <input type="button" value="Get Info" />
+    <input type="button" value="Get Info" onclick="javascript:getInfo('#content')" />
     <input type="button" value="Staking Status" />
     <input type="button" value="Staking Reward" />
 </div>
+
+<div id="content">
+</div>
+
+<script>
+    function getInfo(destElem) {
+        $.ajax({
+            url: '/control/getinfo',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                $(destElem).html(response["info"]);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    };
+</script>
 {% endblock %}

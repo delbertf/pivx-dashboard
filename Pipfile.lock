@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8c454a719db61a7b5fe0c3fd5a04a9e6ccea65b5f729495512082f1bf7866a23"
+            "sha256": "40bbe95f2643a4e5fc740ddd3e0aaa36166cebb437283d1f290cc9660b0f9b77"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -86,6 +86,13 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.1.1"
+        },
+        "python-bitcoinrpc": {
+            "hashes": [
+                "sha256:a6a6f35672635163bc491c25fe29520bdd063dedbeda3b37bf5be97aa038c6e7"
+            ],
+            "index": "pypi",
+            "version": "==1.0"
         },
         "python-dotenv": {
             "hashes": [
