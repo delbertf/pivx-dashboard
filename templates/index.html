@@ -6,23 +6,42 @@
 
 {% block content %}
 
-<!-- Card with basic wallet information -->
-<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
+<!-- Card with basic generell information -->
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Wallet Information</h2>
+        <h2 class="mdl-card__title-text">Generell Information</h2>
     </div>
     <div class="mdl-card__supporting-text" id="get_info_table">
         <!-- this element is updated with the table control by an ajax call-->
         {% include 'index_getinfo.html' %}
     </div>
     <div class="mdl-card__menu">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="javascript:getInfo()">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+            onclick="javascript:updateInformation('div#get_info_table','/control/getinfo')">
             <i class="material-icons">refresh</i>
         </button>
     </div>
 </div>
 
-<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
+<!-- Card with basic wallet information -->
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Wallet Information</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="get_wallet_info">
+        <!-- this element is updated with the table control by an ajax call-->
+        {% include 'index_getwalletinfo.html' %}
+    </div>
+    <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+            onclick="javascript:updateInformation('div#get_wallet_info','/control/getwalletinfo')">
+            <i class="material-icons">refresh</i>
+        </button>
+    </div>
+</div>
+
+<!-- Card with basic staking information -->
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col ">
     <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Staking Information</h2>
     </div>
@@ -32,32 +51,20 @@
     </div>
     <div class="mdl-card__menu">
         <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-            onclick="javascript:getstakingstatus()">
+            onclick="javascript:updateInformation('div#get_stakinginfo_table','/control/getstakingstatus')">
             <i class="material-icons">refresh</i>
         </button>
     </div>
 </div>
 
-<script>
-    function getInfo(destElem) {
-        $.ajax({
-            url: '/control/getinfo',
-            type: 'POST',
-            success: function (response) {
-                $('div#get_info_table').html(response.data);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
-    };
 
-    function getstakingstatus(destElem) {
+<script>
+    function updateInformation(destElem, apiURL) {
         $.ajax({
-            url: '/control/getstakingstatus',
+            url: apiURL,
             type: 'POST',
             success: function (response) {
-                $('div#get_stakinginfo_table').html(response.data);
+                $(destElem).html(response.data);
             },
             error: function (error) {
                 console.log(error);

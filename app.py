@@ -16,7 +16,10 @@ if not RPC_KEY:
 @app.route('/')
 def index():
     ts = time.gmtime()
-    return render_template('index.html', get_info=pivx_get_info(), staking_status=pivx_get_staking_status(), last_update=time.strftime("%Y-%m-%d %H:%M:%S", ts))
+    get_info = pivx_get_info()
+    staking_status = pivx_get_staking_status()
+    wallet_info = pivx_get_wallet_info()
+    return render_template('index.html', get_info=get_info, staking_status=staking_status, wallet_info=wallet_info, last_update=time.strftime("%Y-%m-%d %H:%M:%S", ts))
 
 
 @ app.route('/wallet')
@@ -25,7 +28,7 @@ def wallet():
 
 
 """
- Application API
+ Application API layer
 """
 
 
@@ -41,8 +44,14 @@ def control_getstakingstatus():
     return jsonify({'data': render_template('index_getstakinginfo.html', staking_status=pivx_get_staking_status(), last_update=time.strftime("%Y-%m-%d %H:%M:%S", ts))})
 
 
+@app.route('/control/getwalletinfo', methods=['POST'])
+def control_getwalletinfo():
+    ts = time.gmtime()
+    return jsonify({'data': render_template('index_getwalletinfo.html', wallet_info=pivx_get_wallet_info(), last_update=time.strftime("%Y-%m-%d %H:%M:%S", ts))})
+
+
 """
-PIVX wrapper API functions
+PIVX wrapper API functions to query the Pivx Server with json RPC
 """
 
 
@@ -67,5 +76,18 @@ def pivx_get_staking_status():
     print(access.getstakingstatus())
     get_info = {key: value
                 for (key, value) in access.getstakingstatus().items()
+                if key in include_properties}
+    return get_info
+
+
+def pivx_get_wallet_info():
+    access = AuthServiceProxy(
+        "http://%s:%s@127.0.0.1:51473" % (RPC_USER, RPC_KEY))
+
+    include_properties = ["balance", "delegated_balance", "cold_staking_balance", "unconfirmed_balance",
+                          "immature_balance", "immature_delegated_balance", "immature_cold_staking_balance", "txcount", "paytxfee"]
+    print(access.getwalletinfo())
+    get_info = {key: value
+                for (key, value) in access.getwalletinfo().items()
                 if key in include_properties}
     return get_info
