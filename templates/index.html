@@ -1,17 +1,41 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Hello PIVX Dashboard{% endblock %}</h1>
+<h1></h1>
 {% endblock %}
 
 {% block content %}
-<div>
-    <input type="button" value="Get Info" onclick="javascript:getInfo('#content')" />
-    <input type="button" value="Staking Status" />
-    <input type="button" value="Staking Reward" />
+
+<!-- Card with basic wallet information -->
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Wallet Information</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="get_info_table">
+        <!-- this element is updated with the table control by an ajax call-->
+        {% include 'index_getinfo.html' %}
+    </div>
+    <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="javascript:getInfo()">
+            <i class="material-icons">refresh</i>
+        </button>
+    </div>
 </div>
 
-<div id="content">
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Staking Information</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="get_stakinginfo_table">
+        <!-- this element is updated with the table control by an ajax call-->
+        {% include 'index_getstakinginfo.html' %}
+    </div>
+    <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+            onclick="javascript:getstakingstatus()">
+            <i class="material-icons">refresh</i>
+        </button>
+    </div>
 </div>
 
 <script>
@@ -20,8 +44,20 @@
             url: '/control/getinfo',
             type: 'POST',
             success: function (response) {
-                console.log(response);
-                $(destElem).html(response.walletversion);
+                $('div#get_info_table').html(response.data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    };
+
+    function getstakingstatus(destElem) {
+        $.ajax({
+            url: '/control/getstakingstatus',
+            type: 'POST',
+            success: function (response) {
+                $('div#get_stakinginfo_table').html(response.data);
             },
             error: function (error) {
                 console.log(error);

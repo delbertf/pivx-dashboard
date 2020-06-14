@@ -1,0 +1,17 @@
+last update: {{ last_update }}
+<table class="mdl-data-table mdl-js-data-table">
+    <thead>
+        <tr>
+            <th class="mdl-data-table__cell--non-numeric">Property</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for elem in staking_status %}
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric">{{ elem }}</td>
+            <td>{{ staking_status[elem] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
