@@ -57,6 +57,23 @@
     </div>
 </div>
 
+<!-- Card with mnsync information -->
+<div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col ">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Sync Information</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="get_mnsync_status">
+        <!-- this element is updated with the table control by an ajax call-->
+        {% include 'index_getmnsyncstatus.html' %}
+    </div>
+    <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+            onclick="javascript:updateInformation('div#get_mnsync_status','/control/getmnsyncstatus')">
+            <i class="material-icons">refresh</i>
+        </button>
+    </div>
+</div>
+
 
 <script>
     function updateInformation(destElem, apiURL) {
