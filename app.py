@@ -117,8 +117,6 @@ def pivx_get_wallet_info(pivxd):
 
 @access_pivxd
 def pivx_get_mnsync_status(pivxd):
-    access = AuthServiceProxy(
-        "http://%s:%s@127.0.0.1:51473" % (RPC_USER, RPC_KEY))
 
     include_properties = ["IsBlockchainSynced", "lastMasternodeList",
                           "lastMasternodeWinner", "lastFailure", "nCountFailures", "countMasternodeList"]
